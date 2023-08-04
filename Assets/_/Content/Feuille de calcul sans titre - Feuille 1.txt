@@ -1,0 +1,22 @@
+Name	Dialog Type	Dialog
+Johnny	Greeting	Greeting!
+Johnny	Greeting	Heya Cutie!
+Johnny	Greeting	Heya CutiePie!
+Johnny	Greeting	Sup
+Johnny	Greeting	YO
+Johnny	Miscallenous	Hi kids, do you like violence
+Johnny	Miscallenous	wanna see me stick nine inch nails into my eye lids
+Johnny	Miscallenous	wanna copy me and do exactly what i did
+Johnny	Miscallenous	try cid and get fucked up worse than my life is?
+Johnny	Miscallenous	my brain dead weight, i'm tryna get my head straight
+Johnny	Miscallenous	but cant figure out which spice girl i wanna impregnate
+Johnny	Miscallenous	end dr dre said hey slim shady u a base head
+Maria	Greeting	Heyyy
+Maria	Greeting	Hello
+Maria	Greeting	Ello
+Maria	Greeting	Heyaaa
+Maria	Greeting	wassup
+Maria	Miscallenous	now put your hands up
+Maria	Miscallenous	up in the club we just broke up
+Maria	Miscallenous	im  doing my own little thing
+Maria	Miscallenous	decided to dip and now you wanna trip
