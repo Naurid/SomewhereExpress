@@ -7,15 +7,15 @@ public class BasicFade : MonoBehaviour
 
     #region Unity API
 
-    private void OnGUI()
-    {
-        if (GUILayout.Button("fade"))
-        {
-            SetBaseAlpha(_isFadeIn? 1f : 0f);
-
-            StartCoroutine(DoTheFade(_isFadeIn));
-        }
-    }
+    // private void OnGUI()
+    // {
+    //     if (GUILayout.Button("fade"))
+    //     {
+    //         SetBaseAlpha(_isFadeIn? 1f : 0f);
+    //
+    //         StartCoroutine(DoTheFade(_isFadeIn));
+    //     }
+    // }
 
     private void SetBaseAlpha(float baseAlpha)
     {

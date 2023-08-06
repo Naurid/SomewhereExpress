@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6757d2ff714a5c48b223cdbe25624d2, type: 3}
+  m_Name: Blue Cube
+  m_EditorClassIdentifier: 
+  m_itemSprite: {fileID: 21300000, guid: d15b9ab2b76e470429a7702dd1460c58, type: 3}
+  m_itemPrefab: {fileID: 5207703998946639498, guid: 0b9ef37e8a0620c45b2adfa8e7487202,
+    type: 3}
+  m_itemName: Blue Cube
+  m_itemDescription: A blue cube
+  m_isItemStackable: 0

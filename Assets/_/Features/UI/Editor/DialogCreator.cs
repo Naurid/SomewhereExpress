@@ -10,8 +10,8 @@ using UnityEngine;
 public class DialogCreator : Editor
 {
 
-    private int index;
-    private List<string> _stringList = new ();
+    
+    #region Unity API
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -23,6 +23,11 @@ public class DialogCreator : Editor
             RefreshDialogDataBase(manager);
         }
     }
+
+    #endregion
+
+
+    #region Main Methods
 
     private void RefreshDialogDataBase(DialogManager manager)
     {
@@ -60,4 +65,14 @@ public class DialogCreator : Editor
             Directory.CreateDirectory(dir);
         }
     }
+
+    #endregion
+    
+    
+    #region Private and Protected
+
+    private int index;
+    private List<string> _stringList = new ();
+
+    #endregion
 }

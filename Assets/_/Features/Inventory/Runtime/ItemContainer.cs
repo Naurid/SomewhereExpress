@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DialogManager : MonoBehaviour
+public class ItemContainer : MonoBehaviour
 {
-    public TextAsset _dialogSheet;
-
+    public ItemData m_itemData;
 }
