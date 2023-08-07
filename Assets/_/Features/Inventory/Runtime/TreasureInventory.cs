@@ -1,6 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TreasureInventory : MonoBehaviour
@@ -8,8 +7,8 @@ public class TreasureInventory : MonoBehaviour
     [SerializeField] private GameObject _treasureInventoryPanel;
     private InventoryUI _UImanager;
     private InventoryManager _manager;
-    public List<ItemData> m_items = new();
     public List<ItemData> m_keyItems;
+    private int _score;
 
     private void Start()
     {
@@ -31,64 +30,45 @@ public class TreasureInventory : MonoBehaviour
 
     public void CheckForItems()
     {
-        m_items.Clear();
-        
         foreach (Transform slot in _treasureInventoryPanel.transform.GetChild(0))
         {
-            if (slot.GetComponent<InventorySlot>().m_item != null)
+          
+            InventorySlot currentSlot = slot.GetComponent<InventorySlot>();
+
+            if (m_keyItems.Contains(currentSlot.m_item))
             {
-                for (int i = 0; i < slot.GetComponent<InventorySlot>().m_itemCount; i++)
-                {
-                    m_items.Add(slot.GetComponent<InventorySlot>().m_item);
-                }
+                _score++;
             }
         }
 
-        foreach (var item in m_items)
+        if (m_keyItems.Count == _score)
         {
-            if (m_keyItems.Contains(item))
+            foreach (Transform slot in _treasureInventoryPanel.transform.GetChild(0))
             {
-                m_keyItems.Remove(item);
-            }
-        }
+                var currentSlot = slot.GetComponent<InventorySlot>();
 
-        if (m_keyItems.Count == 0)
-        {
-            foreach (var item in m_items)
-            {
-                _manager.RemoveItem(item);
-                _manager.m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
+                if (!m_keyItems.Contains(currentSlot.m_item)) continue;
+                currentSlot.m_itemCount--;
+
+                if (currentSlot.m_itemCount > 0) continue;
+                currentSlot.m_item = null;
+                currentSlot.m_itemCount = 0;
+                Destroy(slot.GetChild(0).gameObject);
             }
-            
-            foreach (Transform slot in _treasureInventoryPanel.transform.GetChild(0))
-            {
-                slot.GetComponent<InventorySlot>().m_item = null;
-                slot.GetComponent<InventorySlot>().m_itemCount = 0;
-                if (slot.childCount != 0)
-                {
-                    Destroy(slot.GetChild(0).gameObject);
-                    _manager.m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
-            
-            m_items.Clear();
-            
-            Debug.Log("you win");
-        }
-        else
-        {
-            foreach (Transform slot in _treasureInventoryPanel.transform.GetChild(0))
-            {
-                slot.GetComponent<InventorySlot>().m_item = null;
-                slot.GetComponent<InventorySlot>().m_itemCount = 0;
-                
-                if (slot.childCount != 0)
-                {
-                    Destroy(slot.GetChild(0).gameObject);
-                    _manager.m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
+            RefreshVisuals();
         }
     }
-    
+
+    private void RefreshVisuals()
+    {
+        foreach (Transform slot in _treasureInventoryPanel.transform.GetChild(0))
+        {
+            InventorySlot currentSlot = slot.GetComponent<InventorySlot>();
+
+            if (currentSlot.m_item == null) continue;
+
+            slot.GetChild(0).GetChild(1).GetComponent<TMP_Text>().text = currentSlot.m_itemCount.ToString();
+        }
+    }
+
 }

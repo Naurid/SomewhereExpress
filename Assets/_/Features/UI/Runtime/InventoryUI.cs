@@ -69,10 +69,6 @@ public class InventoryUI : MonoBehaviour
 
    public void RefreshInventory(object sender, EventArgs e)
    {
-      CleanInventory();
-
-      SetInventoryUIData();
-
       SetInventoryVisuals();
    }
 
@@ -89,45 +85,27 @@ public class InventoryUI : MonoBehaviour
          }
       }
    }
-   private void SetInventoryUIData()
-   {
-      foreach (var item in _inventoryManager._items)
-      {
-         foreach (Transform slot in _inventoryPanel.transform)
-         {
-            InventorySlot currentSlot = slot.GetComponent<InventorySlot>();
 
-            if (currentSlot.m_item == null)
-            {
-               currentSlot.m_item = item;
-               currentSlot.m_itemCount++;
-
-               break;
-            }
-
-            if (currentSlot.m_item != null && currentSlot.m_item == item && currentSlot.m_item.m_isItemStackable &&
-                currentSlot.m_itemCount <= item.m_stackSize)
-            {
-               currentSlot.m_itemCount++;
-               break;
-            }
-         }
-      }
-   }
-   
    private void SetInventoryVisuals()
    {
       foreach (Transform slot in _inventoryPanel.transform)
       {
          InventorySlot currentSlot = slot.GetComponent<InventorySlot>();
-
+         
          if (currentSlot.m_item != null)
          {
+            if (slot.childCount != 0)
+            {
+               Destroy(slot.GetChild(0).gameObject);
+            }
+            
             GameObject itemDisplay = Instantiate(_itemDisplayPrefab, slot);
 
             itemDisplay.transform.GetChild(0).GetComponent<Image>().sprite = currentSlot.m_item.m_itemSprite;
             itemDisplay.transform.GetChild(1).GetComponent<TMP_Text>().text = currentSlot.m_item.m_isItemStackable ? currentSlot.m_itemCount.ToString() : "";
          }
+         
+         
       }
    }
    #endregion

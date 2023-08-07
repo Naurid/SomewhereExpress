@@ -58,20 +58,18 @@ public class DraggableItemDisplay : MonoBehaviour, IBeginDragHandler, IDragHandl
     public void DeleteItem()
     {
         InventorySlot parentSlot = transform.parent.GetComponent<InventorySlot>();
-        _manager.RemoveItem(parentSlot.m_item);
         parentSlot.m_item = null;
         parentSlot.m_itemCount = 0;
-        _manager.m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        Destroy(gameObject);
     }
 
     public void DropItem()
     {
         InventorySlot parentSlot = transform.parent.GetComponent<InventorySlot>();
         _manager.DropItem(parentSlot.m_item);
-        _manager.RemoveItem(parentSlot.m_item);
         parentSlot.m_item = null;
         parentSlot.m_itemCount = 0;
-        _manager.m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
+        Destroy(gameObject);
     }
 
     public void UseItem()

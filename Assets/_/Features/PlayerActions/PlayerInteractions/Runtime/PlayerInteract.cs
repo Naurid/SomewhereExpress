@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
-    private bool _canInteract;
     private bool _isInteracting;
     private GameObject _interactible;
 
@@ -22,34 +21,36 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("interactible"))
-        {
-            _canInteract = true;
-            _interactible = other.gameObject;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("interactible"))
-        {
-            _canInteract = false;
-            _interactible = null;
-        }
-    }
-
     public void Interact(InputAction.CallbackContext context)
     {
-        if (context.started && _canInteract && !_isInteracting)
+        if (context.started)
         {
-            _isInteracting = true;
-        }
-        else if (context.started && _isInteracting)
-        {
+            if (!_isInteracting)
+            {
+                if (Camera.main == null) return;
+                var camPosition = Camera.main.transform.position;
+                var headPosition = _head.position;
+                var distance = Vector3.Distance(camPosition, headPosition) + _pickupDistance;
+                Ray ray = new Ray(camPosition,  headPosition - camPosition);
+
+                if (Physics.Raycast(ray, out RaycastHit hit, distance, _layerMask))
+                {
+                    if (hit.transform.CompareTag("interactible"))
+                    {
+                        _interactible = hit.transform.gameObject;
+                        _isInteracting = true;
+                        return;
+                    }
+                }
+            }
+           
             _isInteracting = false;
         }
 
+        
     }
+    
+    [SerializeField] private Transform _head;
+    [SerializeField] private float _pickupDistance;
+    [SerializeField] private LayerMask _layerMask;
 }

@@ -9,7 +9,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager m_instance;
 
     public EventHandler<EventArgs> m_onInventoryChanged;
-    public List<ItemData> _items = new();
+    public List<string> m_playerInventory;
 
     #endregion
 
@@ -33,15 +33,33 @@ public class InventoryManager : MonoBehaviour
     
     #region Main Methods
 
+    public void LoadInventory(SaveData data)
+    {
+        m_playerInventory = data.m_inventoryItems;
+    }
     public void AddItem(ItemData item)
     {
-        _items.Add(item);
-        m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
-    }
-
-    public void RemoveItem(ItemData item)
-    {
-        _items.Remove(item);
+        foreach (Transform slot in _playerInventoryPanel.transform)
+        {
+            InventorySlot currentSlot = slot.GetComponent<InventorySlot>();
+            
+            if (currentSlot.m_item == null)
+            {
+                currentSlot.m_item = item;
+                currentSlot.m_itemCount++;
+                Debug.Log( currentSlot.m_item);
+                break;
+            }
+            
+            if (currentSlot.m_item.m_isItemStackable && currentSlot.m_itemCount < currentSlot.m_item.m_stackSize)
+            {
+                currentSlot.m_itemCount++;
+                break;
+            }
+            
+        }
+        
+        m_playerInventory.Add(item.name);
         m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -57,6 +75,7 @@ public class InventoryManager : MonoBehaviour
     #region Private and Protected
 
     [SerializeField] private GameObject _player;
+    [SerializeField] private GameObject _playerInventoryPanel;
 
     #endregion
 }
