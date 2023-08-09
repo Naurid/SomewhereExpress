@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class TPPoint : MonoBehaviour
 {
+    private DebugTP _manager;
     private void OnEnable()
     {
-        DebugTP manager = GameObject.FindObjectOfType<DebugTP>();
-        manager.m_tpPoints.Add(this);
+        _manager = GameObject.FindObjectOfType<DebugTP>();
+        _manager.m_tpPoints.Add(this);
     }
 
     private void OnDisable()
     {
-        DebugTP manager = GameObject.FindObjectOfType<DebugTP>();
-        manager.m_tpPoints.Remove(this);
+        _manager.m_tpPoints.Remove(this);
     }
 }

@@ -2098,7 +2098,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: 0.0063854195, y: 0.99062735, z: -0.12703212, w: 0.04979505}
+  m_LocalRotation: {x: 0.00638542, y: 0.99062735, z: -0.12703212, w: 0.049795054}
   m_LocalPosition: {x: 3.568326, y: 3.335, z: 35.019753}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3019,7 +3019,6 @@ GameObject:
   - component: {fileID: 498211262}
   - component: {fileID: 498211263}
   - component: {fileID: 498211264}
-  - component: {fileID: 498211265}
   m_Layer: 6
   m_Name: PlayerParent
   m_TagString: Player
@@ -3172,7 +3171,7 @@ MonoBehaviour:
     m_ActionName: Player/Interact[/Keyboard/q]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 498211265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerSave, Assembly-CSharp
         m_MethodName: SavePlayer
         m_Mode: 1
@@ -3188,7 +3187,7 @@ MonoBehaviour:
     m_ActionName: Player/Save[/Keyboard/1]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 498211265}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PlayerSave, Assembly-CSharp
         m_MethodName: LoadPlayer
         m_Mode: 1
@@ -3288,18 +3287,6 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 63
---- !u!114 &498211265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 498211254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da55d07baca8e7f4fb47145ab875d282, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &507661370
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8851,6 +8838,51 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1665185321}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1383611904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1383611906}
+  - component: {fileID: 1383611905}
+  m_Layer: 0
+  m_Name: PersistenceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1383611905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383611904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2535290c19053a34c80b2faba54f48a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fileName: save.shrek
+--- !u!4 &1383611906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383611904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 877.5, y: 493.50006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1396860372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9318,7 +9350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 841b26139d95a8c45879f5f2ec724f9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_currentSceneIndex: 5
+  m_objectsInScene: []
 --- !u!4 &1520050021
 Transform:
   m_ObjectHideFlags: 0
@@ -10147,7 +10179,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1654436844}
-  m_LocalRotation: {x: 0.0063854223, y: 0.99062735, z: -0.12703212, w: 0.04979507}
+  m_LocalRotation: {x: 0.0063854223, y: 0.99062735, z: -0.12703212, w: 0.049795073}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10899,7 +10931,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744232663}
-  m_LocalRotation: {x: 0.0054810154, y: 0.9927689, z: -0.10903978, w: 0.04990272}
+  m_LocalRotation: {x: 0.005481019, y: 0.9927689, z: -0.10903978, w: 0.049902752}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

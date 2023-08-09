@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneHandler : MonoBehaviour
+public class SceneHandler : MonoBehaviour,IDataPersistence
 {
     public static SceneHandler m_instance;
-    public int m_currentSceneIndex;
+    private int _currentSceneIndex;
+
+    public List<ItemContainer> m_objectsInScene;
 
     private void Awake()
     {
@@ -17,11 +20,32 @@ public class SceneHandler : MonoBehaviour
             Destroy(this);
         }
 
-        m_currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    public void LoadScene(SaveData data)
+    public void LoadData(SaveData data)
     {
-        SceneManager.LoadScene(data.m_sceneIndex);
+        if (SceneManager.GetActiveScene().buildIndex != data.m_sceneIndex)
+        {
+            SceneManager.LoadScene(data.m_sceneIndex);
+        }
+
+        foreach (ItemData item in data.m_playerInventory)
+        {
+            foreach (ItemContainer container in m_objectsInScene)
+            {
+                if (container.m_itemData == item)
+                {
+                    Destroy(container.gameObject);
+                    m_objectsInScene.Remove(container);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void SaveData(SaveData data)
+    {
+        data.m_sceneIndex = _currentSceneIndex;
     }
 }

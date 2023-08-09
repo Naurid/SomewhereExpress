@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour, IDataPersistence
 {
     #region Public Members
 
     public static InventoryManager m_instance;
 
     public EventHandler<EventArgs> m_onInventoryChanged;
-    public List<string> m_playerInventory;
+    public List<ItemData> m_playerInventory;
 
     #endregion
 
@@ -32,11 +33,7 @@ public class InventoryManager : MonoBehaviour
 
     
     #region Main Methods
-
-    public void LoadInventory(SaveData data)
-    {
-        m_playerInventory = data.m_inventoryItems;
-    }
+    
     public void AddItem(ItemData item)
     {
         foreach (Transform slot in _playerInventoryPanel.transform)
@@ -51,7 +48,7 @@ public class InventoryManager : MonoBehaviour
                 break;
             }
             
-            if (currentSlot.m_item.m_isItemStackable && currentSlot.m_itemCount < currentSlot.m_item.m_stackSize)
+            if (item.m_isItemStackable && currentSlot.m_item.m_isItemStackable && currentSlot.m_itemCount < currentSlot.m_item.m_stackSize)
             {
                 currentSlot.m_itemCount++;
                 break;
@@ -59,7 +56,7 @@ public class InventoryManager : MonoBehaviour
             
         }
         
-        m_playerInventory.Add(item.name);
+        m_playerInventory.Add(item);
         m_onInventoryChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -67,6 +64,16 @@ public class InventoryManager : MonoBehaviour
     {
         Vector3 spawnPoint = _player.transform.position + transform.forward + new Vector3(0, item.m_itemPrefab.transform.localScale.y, 0);
         Instantiate(item.m_itemPrefab, spawnPoint, _player.transform.rotation);
+    }
+
+    private void LoadInventory(List<ItemData> inventory)
+    {
+        foreach (var item in inventory.ToList())
+        {
+           AddItem(item);
+        }
+        
+        InventoryUI.m_instance.RefreshInventory(this, EventArgs.Empty);
     }
 
     #endregion
@@ -78,4 +85,23 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject _playerInventoryPanel;
 
     #endregion
+
+    public void LoadData(SaveData data)
+    {
+        transform.position = data.m_playerPostion;
+        transform.rotation = data.m_playerRotation;
+        
+        LoadInventory(data.m_playerInventory);
+
+    }
+
+    public void SaveData(SaveData data)
+    {
+        if (m_playerInventory.Count != 0)
+        {
+            data.m_playerInventory = m_playerInventory;
+        }
+        data.m_playerPostion = transform.position;
+        data.m_playerRotation = transform.rotation;
+    }
 }

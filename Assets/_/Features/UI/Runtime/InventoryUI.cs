@@ -27,6 +27,10 @@ public class InventoryUI : MonoBehaviour
       }
    }
 
+   private void OnEnable()
+   {
+   }
+
    private void Start()
    {
       _inventoryManager = InventoryManager.m_instance;
