@@ -3,7 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 
-public class GraphicsMenu : MonoBehaviour
+public class GraphicsMenu : MenuParent
 {
     private Resolution[] _resolutions;
     private bool _fullScreen;

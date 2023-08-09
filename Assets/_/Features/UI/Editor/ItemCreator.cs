@@ -15,8 +15,8 @@ public class ItemCreator : EditorWindow
     private void OnGUI()
     {
         EditorGUILayout.Space(20f);
-        _itemName = EditorGUILayout.TextField(_itemName);
-        _itemDescription = EditorGUILayout.TextField(_itemDescription);
+        _itemName = EditorGUILayout.TextField("item name", _itemName);
+        _itemDescription = EditorGUILayout.TextField("item description", _itemDescription);
         
         EditorGUILayout.Space(20f);
         _isItemStackable = EditorGUILayout.ToggleLeft("Is this Item stackable?", _isItemStackable);

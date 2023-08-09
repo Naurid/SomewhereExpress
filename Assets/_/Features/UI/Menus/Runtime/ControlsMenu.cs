@@ -2,7 +2,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ControlsMenu : MonoBehaviour
+public class ControlsMenu : MenuParent
 {
     [SerializeField] private InputActionAsset _inputActions;
     private CinemachineFreeLook _camera;

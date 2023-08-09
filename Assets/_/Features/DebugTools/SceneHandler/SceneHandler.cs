@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,24 +21,25 @@ public class SceneHandler : MonoBehaviour,IDataPersistence
         {
             Destroy(this);
         }
-
-        _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
-
+    
     public void LoadData(SaveData data)
     {
-        if (SceneManager.GetActiveScene().buildIndex != data.m_sceneIndex)
-        {
-            SceneManager.LoadScene(data.m_sceneIndex);
-        }
-
+        _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        m_objectsInScene = FindObjectsOfType<ItemContainer>().ToList();
+        
         foreach (ItemData item in data.m_playerInventory)
         {
+          
             foreach (ItemContainer container in m_objectsInScene)
             {
+                Debug.Log("cleaning house bby");
                 if (container.m_itemData == item)
                 {
-                    Destroy(container.gameObject);
+                 
+                        Debug.Log("cleaning house bby");
+                        Destroy(container.gameObject);
+                    
                     m_objectsInScene.Remove(container);
                     break;
                 }

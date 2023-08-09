@@ -88,8 +88,11 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
     public void LoadData(SaveData data)
     {
-        transform.position = data.m_playerPostion;
-        transform.rotation = data.m_playerRotation;
+        if (DataPersistenceManager.instance.isLoaded)
+        {
+            transform.position = data.m_playerPostion;
+            transform.rotation = data.m_playerRotation;
+        }
         
         LoadInventory(data.m_playerInventory);
 
@@ -97,10 +100,7 @@ public class InventoryManager : MonoBehaviour, IDataPersistence
 
     public void SaveData(SaveData data)
     {
-        if (m_playerInventory.Count != 0)
-        {
-            data.m_playerInventory = m_playerInventory;
-        }
+        data.m_playerInventory = m_playerInventory;
         data.m_playerPostion = transform.position;
         data.m_playerRotation = transform.rotation;
     }
