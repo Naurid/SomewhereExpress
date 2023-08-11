@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2955d08c9dda004197c23f12a216205, type: 3}
+  m_Name: testConversation
+  m_EditorClassIdentifier: 
+  m_nodeLinks:
+  - m_baseNodeGuid: 6e820d74-6f57-4b66-b4d3-0d900ae6bb94
+    m_portName: Next
+    m_targetNodeGuid: 9bca1268-3986-4842-bb48-4410a9220e81
+  - m_baseNodeGuid: 9bca1268-3986-4842-bb48-4410a9220e81
+    m_portName: Option 2
+    m_targetNodeGuid: d1297ce9-a97c-451a-8e25-aab7c905afa6
+  - m_baseNodeGuid: 9bca1268-3986-4842-bb48-4410a9220e81
+    m_portName: Option 1
+    m_targetNodeGuid: 9c82b594-e471-4c20-97fd-3e4e523bd3da
+  m_dialogNodeData:
+  - m_guid: 9c82b594-e471-4c20-97fd-3e4e523bd3da
+    m_dialogData: {fileID: 11400000, guid: 145761d1dd73a52468b259d4720489f7, type: 2}
+    m_position: {x: 798.6667, y: 113.99999}
+  - m_guid: d1297ce9-a97c-451a-8e25-aab7c905afa6
+    m_dialogData: {fileID: 11400000, guid: a823d7b26f34e8c448508be2b32e07de, type: 2}
+    m_position: {x: 789.3333, y: 328}
+  - m_guid: 9bca1268-3986-4842-bb48-4410a9220e81
+    m_dialogData: {fileID: 11400000, guid: 64c5c9039abc9734095d88e91dcb7923, type: 2}
+    m_position: {x: 324, y: 154.66667}
+  m_exposedProperties: []
+  m_commentBlockData: []
