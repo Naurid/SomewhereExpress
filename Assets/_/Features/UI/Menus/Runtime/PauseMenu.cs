@@ -8,20 +8,39 @@ public class PauseMenu : MenuParent
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private GameObject _optionsPanel;
 
+    private void Start()
+    {
+        _isPaused = false;
+    }
+
+    private void Update()
+    {
+        if (!_isPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    public void ChangePauseState()
+    {
+        _isPaused = !_isPaused;
+    }
     public void PauseGame()
     {
-        if (_isPaused) return;
+        //if (_isPaused) return;
        
         Time.timeScale = 0f;
         _pausePanel.SetActive(true);
-        _isPaused = true;
     }
     
     public void Resume()
     {
         Time.timeScale = 1f;
         _pausePanel.SetActive(false);
-        _isPaused = false;
     }
 
     public void Options()
