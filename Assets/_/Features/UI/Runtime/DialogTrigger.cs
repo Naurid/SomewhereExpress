@@ -10,7 +10,6 @@ public class DialogTrigger : MonoBehaviour
       if (other.CompareTag("Player"))
       {
          GetComponent<OneShotDialogPlayer>().PlayDialog();
-         
       }
    }
 }

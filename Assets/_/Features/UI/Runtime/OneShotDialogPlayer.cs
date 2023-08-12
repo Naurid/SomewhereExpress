@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class OneShotDialogPlayer : MonoBehaviour
 {
@@ -11,7 +12,37 @@ public class OneShotDialogPlayer : MonoBehaviour
     [SerializeField] private Dialog _dialog;
     [SerializeField] private float _typeSpeed;
     private List<char> letterList = new();
-    
+    private bool _isDialogDone;
+
+    [SerializeField] private InputAction _skip;
+
+    private void OnEnable()
+    {
+        _skip.started += SkipDialog;
+        _skip.Enable();
+    }
+
+    private void SkipDialog(InputAction.CallbackContext ctx)
+    {
+        if (!_isDialogDone)
+        {
+            StopAllCoroutines();
+            _dialogObject.transform.GetChild(2).GetComponent<TMP_Text>().text = _dialog.m_message;
+            _isDialogDone = true;
+        }
+        else if(_isDialogDone)
+        {
+           
+            _dialogObject.SetActive(false);
+        }
+    }
+
+    private void OnDisable()
+    {
+        _skip.started -= SkipDialog;
+        _skip.Disable();
+    }
+
     public void PlayDialog()
     {
         _dialogObject.SetActive(true);
@@ -20,6 +51,7 @@ public class OneShotDialogPlayer : MonoBehaviour
         if (_isInstant)
         {
             _dialogObject.transform.GetChild(2).GetComponent<TMP_Text>().text = _dialog.m_message;
+            _isDialogDone = true;
         }
         else
         {
@@ -37,6 +69,10 @@ public class OneShotDialogPlayer : MonoBehaviour
         if (letterList.Count != _dialog.m_message.Length)
         {
             StartCoroutine(TypeWrite());
+        }
+        else if(letterList.Count == _dialog.m_message.Length)
+        {
+            _isDialogDone = true;
         }
     }
 }

@@ -30,7 +30,13 @@ public class PlayerMove : MonoBehaviour
         _rigidBody.velocity = direction * speed + new Vector3(0,_rigidBody.velocity.y,0);
         
         Vector3 lookDir = Vector3.Scale(_rigidBody.velocity, new Vector3(1, 0, 1));
-        if (lookDir != Vector3.zero) transform.forward = Vector3.Lerp(transform.forward, lookDir, _rotationSpeed);
+        if (lookDir != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(lookDir, Vector3.up);
+            transform.rotation =
+                Quaternion.RotateTowards(transform.rotation, targetRotation,
+                    _rotationSpeed); //Vector3.Lerp(transform.forward, lookDir, _rotationSpeed);
+        }
 
         _playerAnimator.SetFloat(Speed, _rigidBody.velocity.magnitude);
         _playerAnimator.SetFloat(SpeedX, _moveX * speed);

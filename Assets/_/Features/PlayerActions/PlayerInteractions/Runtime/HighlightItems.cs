@@ -24,8 +24,8 @@ public class HighlightItems : MonoBehaviour
 
     private void CheckIfItem()
     {
-        if (Physics.Raycast(Camera.main.transform.position, _head.position - Camera.main.transform.position,
-                out RaycastHit hit, Vector3.Distance(Camera.main.transform.position, _head.position) + _distance,
+        if (Physics.Raycast(_head.position, _head.position - Camera.main.transform.position,
+                out RaycastHit hit, _distance,
                 _layerMask))
         {
             var selected = hit.transform;
