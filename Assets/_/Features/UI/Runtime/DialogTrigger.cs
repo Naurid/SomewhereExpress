@@ -1,8 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Cinemachine;
+using Cinemachine.Editor;
 using UnityEngine;
 
+[RequireComponent(typeof(OneShotDialogPlayer))]
 public class DialogTrigger : MonoBehaviour
 {
    private void OnTriggerEnter(Collider other)
@@ -10,6 +10,7 @@ public class DialogTrigger : MonoBehaviour
       if (other.CompareTag("Player"))
       {
          GetComponent<OneShotDialogPlayer>().PlayDialog();
+         
       }
    }
 }
