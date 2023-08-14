@@ -6,6 +6,7 @@ TagManager:
   tags:
   - item
   - interactible
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -16,8 +17,8 @@ TagManager:
   - Player
   - StencilLayer1
   - StencilLayer2
-  - 
-  - 
+  - Portal
+  - LevelGeom
   - 
   - 
   - 

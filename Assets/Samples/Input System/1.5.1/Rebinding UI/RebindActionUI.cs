@@ -262,16 +262,11 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 m_RebindOperation = null;
             }
 
-            // Disable the action before use
-            action.Disable();
-            
             // Configure the rebind.
             m_RebindOperation = action.PerformInteractiveRebinding(bindingIndex)
-                .WithCancelingThrough("<keyboard>/escape")
                 .OnCancel(
                     operation =>
                     {
-                        action.Enable();
                         m_RebindStopEvent?.Invoke(this, operation);
                         m_RebindOverlay?.SetActive(false);
                         UpdateBindingDisplay();
@@ -280,18 +275,8 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
                 .OnComplete(
                     operation =>
                     {
-                        action.Enable();
                         m_RebindOverlay?.SetActive(false);
                         m_RebindStopEvent?.Invoke(this, operation);
-
-                        if (CheckduplicateBindings(action, bindingIndex, allCompositeParts))
-                        {
-                            action.RemoveBindingOverride(bindingIndex);
-                            CleanUp();
-                            PerformInteractiveRebind(action, bindingIndex, allCompositeParts);
-                            return;
-                        }
-                        
                         UpdateBindingDisplay();
                         CleanUp();
 
@@ -331,34 +316,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             m_RebindOperation.Start();
         }
 
-        private bool CheckduplicateBindings(InputAction action,int bindingIndex, bool allCompositeParts = false)
-        {
-            InputBinding newBinding = action.bindings[bindingIndex];
-            foreach (InputBinding binding in action.actionMap.bindings)
-            {
-                if (binding.action == newBinding.action)
-                {
-                    continue;
-                }
-
-                if (binding.effectivePath == newBinding.effectivePath)
-                {
-                    return true;
-                }
-            }
-            //Check for composite duplicates
-            if (allCompositeParts)
-            {
-                for (int i = 1; i < bindingIndex; i++)
-                {
-                    if (action.bindings[i].effectivePath == newBinding.effectivePath)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
         protected void OnEnable()
         {
             if (s_RebindActionUIs == null)
@@ -458,12 +415,6 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
         // we kick that off from here.
         #if UNITY_EDITOR
         protected void OnValidate()
-        {
-            UpdateActionLabel();
-            UpdateBindingDisplay();
-        }
-        
-        protected void Start()
         {
             UpdateActionLabel();
             UpdateBindingDisplay();
