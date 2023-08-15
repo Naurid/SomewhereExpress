@@ -1,14 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TPPoint : MonoBehaviour
 {
-    private DebugTP _manager;
+    #region Unity API
+
     private void OnEnable()
     {
-        _manager = GameObject.FindObjectOfType<DebugTP>();
+        _manager = FindObjectOfType<DebugTP>();
         _manager.m_tpPoints.Add(this);
     }
 
@@ -16,4 +14,12 @@ public class TPPoint : MonoBehaviour
     {
         _manager.m_tpPoints.Remove(this);
     }
+    #endregion
+  
+    
+    #region Private and protected
+
+    private DebugTP _manager;
+
+    #endregion
 }

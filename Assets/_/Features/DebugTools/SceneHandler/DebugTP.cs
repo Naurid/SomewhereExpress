@@ -1,13 +1,16 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class DebugTP : MonoBehaviour
 {
+    #region Public Members
+
     public List<TPPoint> m_tpPoints;
-    [SerializeField] private GameObject _player;
+
+    #endregion
+
+    
+    #region Unity API
 
     private void OnGUI()
     {
@@ -19,4 +22,13 @@ public class DebugTP : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    
+    #region Private and protected
+
+    [SerializeField] private GameObject _player;
+
+    #endregion
 }

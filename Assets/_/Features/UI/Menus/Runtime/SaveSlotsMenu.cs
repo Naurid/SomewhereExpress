@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,73 +5,69 @@ using UnityEngine.UI;
 
 public class SaveSlotsMenu : MenuParent
 {
-    [Header("Menu Navigation")]
-    [SerializeField] private MainMenu mainMenu;
+    #region Unity API
 
-    [Header("Menu Buttons")]
-    [SerializeField] private Button backButton;
-
-    private SaveSlot[] saveSlots;
-
-    private bool isLoadingGame = false;
-
-    private void Awake() 
+    private void Awake()
     {
-        saveSlots = this.GetComponentsInChildren<SaveSlot>();
+        _saveSlots = this.GetComponentsInChildren<SaveSlot>();
     }
 
-    public void OnSaveSlotClicked(SaveSlot saveSlot) 
+    #endregion
+
+    #region Main Methods
+
+    public void OnSaveSlotClicked(SaveSlot saveSlot)
     {
         // disable all buttons
         DisableMenuButtons();
 
         // update the selected profile id to be used for data persistence
-        DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+        DataPersistenceManager.m_instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
 
-        if (!isLoadingGame) 
+        if (!_isLoadingGame)
         {
             // create a new game - which will initialize our data to a clean slate
-            DataPersistenceManager.instance.NewGame();
-            DataPersistenceManager.instance.isLoaded = false;
+            DataPersistenceManager.m_instance.NewGame();
+            DataPersistenceManager.m_instance.m_isLoaded = false;
             SceneManager.LoadSceneAsync(1);
         }
 
         // load the scene - which will in turn save the game because of OnSceneUnloaded() in the DataPersistenceManager
-        SceneManager.LoadSceneAsync(DataPersistenceManager.instance.GetData().m_sceneIndex);
+        SceneManager.LoadSceneAsync(DataPersistenceManager.m_instance.GetData().m_sceneIndex);
     }
 
-    public void OnBackClicked() 
+    public void OnBackClicked()
     {
-        mainMenu.ActivateMenu();
+        _mainMenu.ActivateMenu();
         this.DeactivateMenu();
     }
 
-    public void ActivateMenu(bool isLoadingGame) 
+    public void ActivateMenu(bool isLoadingGame)
     {
         // set this menu to be active
         this.gameObject.SetActive(true);
 
         // set mode
-        this.isLoadingGame = isLoadingGame;
+        this._isLoadingGame = isLoadingGame;
 
         // load all of the profiles that exist
-        Dictionary<string, SaveData> profilesGameData = DataPersistenceManager.instance.GetAllProfilesGameData();
+        Dictionary<string, SaveData> profilesGameData = DataPersistenceManager.m_instance.GetAllProfilesGameData();
 
         // loop through each save slot in the UI and set the content appropriately
-        GameObject firstSelected = backButton.gameObject;
-        foreach (SaveSlot saveSlot in saveSlots) 
+        GameObject firstSelected = _backButton.gameObject;
+        foreach (SaveSlot saveSlot in _saveSlots)
         {
             SaveData profileData = null;
             profilesGameData.TryGetValue(saveSlot.GetProfileId(), out profileData);
             saveSlot.SetData(profileData);
-            if (profileData == null && isLoadingGame) 
+            if (profileData == null && isLoadingGame)
             {
                 saveSlot.SetInteractable(false);
             }
-            else 
+            else
             {
                 saveSlot.SetInteractable(true);
-                if (firstSelected.Equals(backButton.gameObject))
+                if (firstSelected.Equals(_backButton.gameObject))
                 {
                     firstSelected = saveSlot.gameObject;
                 }
@@ -83,17 +78,34 @@ public class SaveSlotsMenu : MenuParent
         StartCoroutine(this.SetFirstSelected(firstSelected));
     }
 
-    public void DeactivateMenu() 
+    public void DeactivateMenu()
     {
         this.gameObject.SetActive(false);
     }
 
-    private void DisableMenuButtons() 
+    private void DisableMenuButtons()
     {
-        foreach (SaveSlot saveSlot in saveSlots) 
+        foreach (SaveSlot saveSlot in _saveSlots)
         {
             saveSlot.SetInteractable(false);
         }
-        backButton.interactable = false;
+
+        _backButton.interactable = false;
     }
+
+    #endregion
+
+    #region Private and protected
+
+    [Header("Menu Navigation")] [SerializeField]
+    private MainMenu _mainMenu;
+
+    [Header("Menu Buttons")] [SerializeField]
+    private Button _backButton;
+
+    private SaveSlot[] _saveSlots;
+
+    private bool _isLoadingGame = false;
+
+    #endregion
 }

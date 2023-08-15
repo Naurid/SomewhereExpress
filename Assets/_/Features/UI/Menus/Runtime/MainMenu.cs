@@ -1,41 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MenuParent
 {
-    [Header("Menu Navigation")]
-    [SerializeField] private SaveSlotsMenu saveSlotsMenu;
+    #region Unity API
 
-    [Header("Menu Buttons")]
-    [SerializeField] private Button newGameButton;
-    [SerializeField] private Button continueGameButton;
-    [SerializeField] private Button loadGameButton;
-
-    private void Start() 
+    private void Start()
     {
-        if (!DataPersistenceManager.instance.HasGameData()) 
+        if (!DataPersistenceManager.m_instance.HasGameData())
         {
             continueGameButton.interactable = false;
             loadGameButton.interactable = false;
         }
     }
 
-    public void OnNewGameClicked() 
+    #endregion
+
+    #region Main Methods
+
+    public void OnNewGameClicked()
     {
         saveSlotsMenu.ActivateMenu(false);
-        this.DeactivateMenu();
+        DeactivateMenu();
     }
 
-    public void OnLoadGameClicked() 
+    public void OnLoadGameClicked()
     {
         saveSlotsMenu.ActivateMenu(true);
-        this.DeactivateMenu();
+        DeactivateMenu();
     }
 
-    public void OnContinueGameClicked() 
+    public void OnContinueGameClicked()
     {
         DisableMenuButtons();
         // load the next scene - which will in turn load the game because of 
@@ -43,19 +39,34 @@ public class MainMenu : MenuParent
         SceneManager.LoadSceneAsync("SampleScene");
     }
 
-    private void DisableMenuButtons() 
+    private void DisableMenuButtons()
     {
         newGameButton.interactable = false;
         continueGameButton.interactable = false;
     }
 
-    public void ActivateMenu() 
+    public void ActivateMenu()
     {
-        this.gameObject.SetActive(true);
+        gameObject.SetActive(true);
     }
 
-    public void DeactivateMenu() 
+    public void DeactivateMenu()
     {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
+
+    #endregion
+
+    #region Private and protected
+
+    [Header("Menu Navigation")] [SerializeField]
+    private SaveSlotsMenu saveSlotsMenu;
+
+    [Header("Menu Buttons")] [SerializeField]
+    private Button newGameButton;
+
+    [SerializeField] private Button continueGameButton;
+    [SerializeField] private Button loadGameButton;
+
+    #endregion
 }

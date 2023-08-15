@@ -1,16 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CameraSwitcher : MonoBehaviour
 {
+    #region Public Members
+
     public static CameraSwitcher m_instance;
 
-    [SerializeField] private CinemachineFreeLook _outsideRig;
-    [SerializeField] private CinemachineFreeLook _insideRig;
+    #endregion
+
+
+    #region Unity API
 
     private void Awake()
     {
@@ -23,6 +23,11 @@ public class CameraSwitcher : MonoBehaviour
             Destroy(this);
         }
     }
+
+    #endregion
+
+    
+    #region Main Methods
 
     public void SwitchRig()
     {
@@ -41,4 +46,14 @@ public class CameraSwitcher : MonoBehaviour
             }
         }
     }
+
+    #endregion
+    
+
+    #region Private and protected
+
+    [SerializeField] private CinemachineFreeLook _outsideRig;
+    [SerializeField] private CinemachineFreeLook _insideRig;
+
+    #endregion
 }

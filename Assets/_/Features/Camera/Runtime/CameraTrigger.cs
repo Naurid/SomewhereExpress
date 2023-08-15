@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraTrigger : MonoBehaviour
 {
-    private CameraSwitcher _switcher;
+    #region Unity API
+    
     void Start()
     {
         _switcher = CameraSwitcher.m_instance;
@@ -18,4 +16,13 @@ public class CameraTrigger : MonoBehaviour
             _switcher.SwitchRig();
         }
     }
+    
+    #endregion
+   
+
+    #region Private and protected
+
+    private CameraSwitcher _switcher;
+
+    #endregion
 }

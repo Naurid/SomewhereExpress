@@ -1,12 +1,9 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu : MenuParent
 {
-    private bool _isPaused;
-    [SerializeField] private GameObject _pausePanel;
-    [SerializeField] private GameObject _optionsPanel;
+    #region Unity API
 
     private void Start()
     {
@@ -16,27 +13,28 @@ public class PauseMenu : MenuParent
     private void Update()
     {
         if (!_isPaused)
-        {
             Resume();
-        }
         else
-        {
             PauseGame();
-        }
     }
+
+    #endregion
+
+    #region Main Methods
 
     public void ChangePauseState()
     {
         _isPaused = !_isPaused;
     }
+
     public void PauseGame()
     {
         //if (_isPaused) return;
-       
+
         Time.timeScale = 0f;
         _pausePanel.SetActive(true);
     }
-    
+
     public void Resume()
     {
         Time.timeScale = 1f;
@@ -51,8 +49,9 @@ public class PauseMenu : MenuParent
 
     public void SaveGame()
     {
-        DataPersistenceManager.instance.SaveGame();
+        DataPersistenceManager.m_instance.SaveGame();
     }
+
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
@@ -64,4 +63,14 @@ public class PauseMenu : MenuParent
         Time.timeScale = 1f;
         Application.Quit();
     }
+
+    #endregion
+
+    #region Private and protected
+
+    private bool _isPaused;
+    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _optionsPanel;
+
+    #endregion
 }

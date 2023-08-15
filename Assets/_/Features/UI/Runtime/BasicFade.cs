@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class BasicFade : MonoBehaviour
 {
-
     #region Unity API
 
     // private void OnGUI()
@@ -26,14 +25,14 @@ public class BasicFade : MonoBehaviour
     }
 
     #endregion
-    
-    
+
+
     #region Main Methods
 
     private IEnumerator DoTheFade(bool fadeIn)
     {
         yield return new WaitForSeconds(_fadeSpeed);
-        
+
         _fadeOutColor = _fadeOutPanel.GetComponent<Image>().color;
 
         if (fadeIn)
@@ -60,22 +59,19 @@ public class BasicFade : MonoBehaviour
                 _fadeOutColor.a += _fadeValue;
                 _fadeOutPanel.GetComponent<Image>().color = _fadeOutColor;
                 StartCoroutine(DoTheFade(_isFadeIn));
-
             }
         }
-       
     }
 
     #endregion
-    
-    
+
+
     #region Private and Protected
 
     [SerializeField] private bool _isFadeIn;
-    [Space]
-    [SerializeField] private GameObject _fadeOutPanel;
+    [Space] [SerializeField] private GameObject _fadeOutPanel;
     [SerializeField] private float _fadeSpeed;
-    [SerializeField][Range(0,1f)] private float _fadeValue;
+    [SerializeField] [Range(0, 1f)] private float _fadeValue;
 
     private Color _fadeOutColor;
 

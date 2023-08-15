@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMove : PortalTraveller
+public class PlayerMove : MonoBehaviour
 {
     #region Unity API
 
@@ -12,12 +9,18 @@ public class PlayerMove : PortalTraveller
     {
         _rigidBody = GetComponent<Rigidbody>();
         _playerAnimator = GetComponentInChildren<Animator>();
+        portalableObject = GetComponent<PortalableObject>();
+        
         if (Camera.main != null) _camTransform = Camera.main.transform;
+        
+        if(portalableObject != null) portalableObject.HasTeleported += PortalableObjectOnHasTeleported;
 
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
     
+    
+  
     private void FixedUpdate()
     {
         Vector3 camDirection = Vector3.Scale(_camTransform.forward, new Vector3(1, 0, 1)).normalized;
@@ -43,10 +46,20 @@ public class PlayerMove : PortalTraveller
         _playerAnimator.SetFloat(SpeedY, _moveY * speed);
     }
 
+    private void OnDestroy()
+    {
+        if (portalableObject != null)portalableObject.HasTeleported -= PortalableObjectOnHasTeleported;
+    }
+    
     #endregion
 
     #region Main Methods
 
+    private void PortalableObjectOnHasTeleported(Portal sender, Portal destination, Vector3 newposition, Quaternion newrotation)
+    {
+        Physics.SyncTransforms();
+    }
+    
     public void GetMovementData(InputAction.CallbackContext context)
     {
         _moveX = context.ReadValue<Vector2>().x;
@@ -74,6 +87,7 @@ public class PlayerMove : PortalTraveller
 
     #region Private and Protected
 
+    [Header("Main Parameters")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private float _sprintValue;
@@ -81,6 +95,7 @@ public class PlayerMove : PortalTraveller
     private Animator _playerAnimator;
     private Rigidbody _rigidBody;
     private Transform _camTransform;
+    private PortalableObject portalableObject;
 
     private float _moveX;
     private float _moveY;
@@ -92,4 +107,5 @@ public class PlayerMove : PortalTraveller
     private static readonly int SpeedY = Animator.StringToHash("speedY");
 
     #endregion
+    
 }

@@ -4,14 +4,11 @@ using UnityEngine.InputSystem;
 
 public class ControlsMenu : MenuParent
 {
-    [SerializeField] private InputActionAsset _inputActions;
-    private CinemachineFreeLook _camera;
+    #region Main Methods
+
     public void ResetAllBindings()
     {
-        foreach (InputActionMap map in _inputActions.actionMaps)
-        {
-            map.RemoveAllBindingOverrides();
-        }
+        foreach (var map in _inputActions.actionMaps) map.RemoveAllBindingOverrides();
         PlayerPrefs.DeleteKey("rebinds");
     }
 
@@ -24,4 +21,13 @@ public class ControlsMenu : MenuParent
     {
         _camera.m_YAxis.m_MaxSpeed = value;
     }
+
+    #endregion
+
+    #region Private and protected
+
+    [SerializeField] private InputActionAsset _inputActions;
+    private CinemachineFreeLook _camera;
+
+    #endregion
 }

@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [Serializable]
 public class SaveData
 {
     public int m_sceneIndex;
-    public long lastUpdated;
+    public long m_lastUpdated;
     public Vector3 m_playerPostion;
     public Quaternion m_playerRotation;
     public List<ItemData> m_playerInventory;

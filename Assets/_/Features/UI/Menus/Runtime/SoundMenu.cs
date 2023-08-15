@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class SoundMenu : MonoBehaviour
 {
-    [SerializeField] private AudioMixer _master;
+    #region Main Methods
 
     public void SetMasterVolume(float value)
     {
@@ -26,6 +24,15 @@ public class SoundMenu : MonoBehaviour
     {
         _master.SetFloat("VoiceVolume", value);
     }
+
+    #endregion
+
+    
+    #region Private and protected
+
+    [SerializeField] private AudioMixer _master;
+    
+    #endregion
 }
 
 

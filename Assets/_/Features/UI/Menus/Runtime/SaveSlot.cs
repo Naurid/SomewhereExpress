@@ -1,48 +1,59 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SaveSlot : MonoBehaviour
 {
-   [Header("Profile")]
-   [SerializeField] private string profileId = "";
-
-   [Header("Content")]
-   [SerializeField] private GameObject noDataContent;
-   [SerializeField] private GameObject hasDataContent;
-   [SerializeField] private TMP_Text text;
-
-   private Button saveSlotButton;
+   #region Unity API
 
    private void Awake() 
    {
-      saveSlotButton = this.GetComponent<Button>();
+      _saveSlotButton = this.GetComponent<Button>();
    }
+
+   #endregion
+
+   #region Main Methods
 
    public void SetData(SaveData data) 
    {
       if (data == null) 
       {
-         noDataContent.SetActive(true);
-         hasDataContent.SetActive(false);
+         _noDataContent.SetActive(true);
+         _hasDataContent.SetActive(false);
       }
       else 
       {
-         noDataContent.SetActive(false);
-         hasDataContent.SetActive(true);
+         _noDataContent.SetActive(false);
+         _hasDataContent.SetActive(true);
 
-         text.text = $"We are at the scene {data.m_sceneIndex}";
+         _text.text = $"We are at the scene {data.m_sceneIndex}";
       }
    }
 
    public string GetProfileId() 
    {
-      return this.profileId;
+      return this._profileId;
    }
 
    public void SetInteractable(bool interactable)
    {
-      saveSlotButton.interactable = interactable;
+      _saveSlotButton.interactable = interactable;
    }
+
+   #endregion
+
+   #region Private and protected
+
+   [Header("Profile")]
+   [SerializeField] private string _profileId = "";
+
+   [Header("Content")]
+   [SerializeField] private GameObject _noDataContent;
+   [SerializeField] private GameObject _hasDataContent;
+   [SerializeField] private TMP_Text _text;
+
+   private Button _saveSlotButton;
+
+   #endregion
 }

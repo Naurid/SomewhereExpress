@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class ItemCreator : EditorWindow
 {
+    #region Unity API
+
     [MenuItem("Custom/Create New Item")]
     static void Init()
     {
@@ -46,6 +48,11 @@ public class ItemCreator : EditorWindow
         }
     }
 
+    #endregion
+
+
+    #region Main Methods
+
     private void CreateItem()
     {
         string dir = "Assets/_/Database/Items";
@@ -73,6 +80,12 @@ public class ItemCreator : EditorWindow
         }
     }
 
+
+    #endregion
+
+    
+    #region Private and Protected
+
     private Sprite _itemSprite;
     private GameObject _itemPrefab;
     
@@ -82,4 +95,7 @@ public class ItemCreator : EditorWindow
     private bool _isItemStackable;
     private int _stackSize;
 
+
+    #endregion
+ 
 }

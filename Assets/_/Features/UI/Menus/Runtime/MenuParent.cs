@@ -1,17 +1,19 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MenuParent : MonoBehaviour
 {
-    [SerializeField] private GameObject firstSelected;
+    #region Unity API
 
     protected void OnEnable()
     {
         StartCoroutine(SetFirstSelected(firstSelected));
     }
+
+    #endregion
+
+    #region Main Methods
 
     public IEnumerator SetFirstSelected(GameObject firstSelectedObject)
     {
@@ -19,4 +21,12 @@ public class MenuParent : MonoBehaviour
         yield return new WaitForEndOfFrame();
         EventSystem.current.SetSelectedGameObject(firstSelectedObject);
     }
+
+    #endregion
+
+    #region Private and protected
+
+    [SerializeField] private GameObject firstSelected;
+
+    #endregion
 }

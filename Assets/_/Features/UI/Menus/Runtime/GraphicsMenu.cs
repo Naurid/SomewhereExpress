@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class GraphicsMenu : MenuParent
 {
-    private Resolution[] _resolutions;
-    private bool _fullScreen;
-    [SerializeField] private TMP_Dropdown _resolutionDropDown;
+    #region Unity API
+
     private void Start()
     {
         _resolutions = Screen.resolutions;
@@ -15,24 +14,25 @@ public class GraphicsMenu : MenuParent
 
         List<string> options = new();
 
-        int index = 0; 
-        
+        var index = 0;
+
         foreach (var resolution in _resolutions)
         {
-            string option = $"{resolution.width} x {resolution.height}";
+            var option = $"{resolution.width} x {resolution.height}";
             options.Add(option);
 
-            if (resolution.width == Screen.currentResolution.width && resolution.height == Screen.currentResolution.height)
-            {
-                index = _resolutions.ToList().IndexOf(resolution);
-            }
-            
+            if (resolution.width == Screen.currentResolution.width &&
+                resolution.height == Screen.currentResolution.height) index = _resolutions.ToList().IndexOf(resolution);
         }
-        
+
         _resolutionDropDown.AddOptions(options);
         _resolutionDropDown.value = index;
         _resolutionDropDown.RefreshShownValue();
     }
+
+    #endregion
+
+    #region Main Methods
 
     public void SetQuality(int index)
     {
@@ -47,7 +47,17 @@ public class GraphicsMenu : MenuParent
 
     public void SetResolution(int index)
     {
-        Resolution resolution = _resolutions[index];
+        var resolution = _resolutions[index];
         Screen.SetResolution(resolution.width, resolution.height, _fullScreen);
     }
+
+    #endregion
+
+    #region Private and protected
+
+    private Resolution[] _resolutions;
+    private bool _fullScreen;
+    [SerializeField] private TMP_Dropdown _resolutionDropDown;
+
+    #endregion
 }

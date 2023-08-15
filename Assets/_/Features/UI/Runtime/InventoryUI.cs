@@ -27,10 +27,6 @@ public class InventoryUI : MonoBehaviour
       }
    }
 
-   private void OnEnable()
-   {
-   }
-
    private void Start()
    {
       _inventoryManager = InventoryManager.m_instance;
@@ -76,20 +72,6 @@ public class InventoryUI : MonoBehaviour
       SetInventoryVisuals();
    }
 
-   private void CleanInventory()
-   {
-      foreach (Transform slot in _inventoryPanel.transform)
-      {
-         slot.GetComponent<InventorySlot>().m_item = null;
-         slot.GetComponent<InventorySlot>().m_itemCount = 0;
-         
-         foreach (Transform child in slot)
-         {
-            Destroy(child.gameObject);
-         }
-      }
-   }
-
    private void SetInventoryVisuals()
    {
       foreach (Transform slot in _inventoryPanel.transform)
@@ -108,8 +90,6 @@ public class InventoryUI : MonoBehaviour
             itemDisplay.transform.GetChild(0).GetComponent<Image>().sprite = currentSlot.m_item.m_itemSprite;
             itemDisplay.transform.GetChild(1).GetComponent<TMP_Text>().text = currentSlot.m_item.m_isItemStackable ? currentSlot.m_itemCount.ToString() : "";
          }
-         
-         
       }
    }
    #endregion

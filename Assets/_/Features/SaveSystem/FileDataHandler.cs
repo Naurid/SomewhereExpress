@@ -1,21 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 public class FileDataHandler
 {
-    private string dataDirPath = "";
-    private string dataFileName = "";
-    private bool useEncryption = false;
-    private readonly string encryptionCodeWord = "eldorado";
+    #region Main Methods
 
     public FileDataHandler(string dataDirPath, string dataFileName, bool useEncryption) 
     {
-        this.dataDirPath = dataDirPath;
-        this.dataFileName = dataFileName;
-        this.useEncryption = useEncryption;
+        _dataDirPath = dataDirPath;
+        _dataFileName = dataFileName;
+        _useEncryption = useEncryption;
     }
 
     public SaveData Load(string profileId) 
@@ -25,7 +21,7 @@ public class FileDataHandler
             return null;
         }
         
-        string path = Path.Combine(dataDirPath, profileId, dataFileName);
+        string path = Path.Combine(_dataDirPath, profileId, _dataFileName);
         SaveData loadedData = null;
         
         if (File.Exists(path)) 
@@ -41,7 +37,7 @@ public class FileDataHandler
                     }
                 }
                 
-                if (useEncryption) 
+                if (_useEncryption) 
                 {
                     dataToLoad = EncryptDecrypt(dataToLoad);
                 }
@@ -63,7 +59,7 @@ public class FileDataHandler
             return;
         }
         
-        string path = Path.Combine(dataDirPath, profileId, dataFileName);
+        string path = Path.Combine(_dataDirPath, profileId, _dataFileName);
         
         try 
         {
@@ -71,7 +67,7 @@ public class FileDataHandler
             
             string dataToStore = JsonUtility.ToJson(data, true);
             
-            if (useEncryption) 
+            if (_useEncryption) 
             {
                 dataToStore = EncryptDecrypt(dataToStore);
             }
@@ -94,12 +90,12 @@ public class FileDataHandler
     {
         Dictionary<string, SaveData> profileDictionary = new();
 
-        IEnumerable<DirectoryInfo> directoryInfos = new DirectoryInfo(dataDirPath).EnumerateDirectories();
+        IEnumerable<DirectoryInfo> directoryInfos = new DirectoryInfo(_dataDirPath).EnumerateDirectories();
         foreach (DirectoryInfo directory in directoryInfos)
         {
             string profileId = directory.Name;
 
-            string path = Path.Combine(dataDirPath, profileId, dataFileName);
+            string path = Path.Combine(_dataDirPath, profileId, _dataFileName);
             if (!File.Exists(path))
             {
                 Debug.LogWarning($"Skipping directory when loading all profiles beacause it does not contain data: {profileId}");
@@ -144,8 +140,8 @@ public class FileDataHandler
             // otherwise, compare to see which date is the most recent
             else 
             {
-                DateTime mostRecentDateTime = DateTime.FromBinary(profilesGameData[mostRecentProfileId].lastUpdated);
-                DateTime newDateTime = DateTime.FromBinary(gameData.lastUpdated);
+                DateTime mostRecentDateTime = DateTime.FromBinary(profilesGameData[mostRecentProfileId].m_lastUpdated);
+                DateTime newDateTime = DateTime.FromBinary(gameData.m_lastUpdated);
                 // the greatest DateTime value is the most recent
                 if (newDateTime > mostRecentDateTime) 
                 {
@@ -161,8 +157,20 @@ public class FileDataHandler
         string modifiedData = "";
         for (int i = 0; i < data.Length; i++) 
         {
-            modifiedData += (char) (data[i] ^ encryptionCodeWord[i % encryptionCodeWord.Length]);
+            modifiedData += (char) (data[i] ^ _encryptionCodeWord[i % _encryptionCodeWord.Length]);
         }
         return modifiedData;
     }
+
+    #endregion
+    
+
+    #region Private and protected
+
+    private string _dataDirPath = "";
+    private string _dataFileName = "";
+    private bool _useEncryption = false;
+    private readonly string _encryptionCodeWord = "shrek";
+
+    #endregion
 }
